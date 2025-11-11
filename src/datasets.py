@@ -4,9 +4,34 @@ Provides functions to load and apply gradient descent to real datasets
 """
 
 import numpy as np
+from pathlib import Path
 from typing import Tuple
 from linear_regression import LinearRegressionGD
 from logistic_regression import LogisticRegressionGD
+
+
+def get_results_path(filename: str) -> Path:
+    """
+    Get absolute path to results directory and ensure it exists.
+
+    Parameters:
+    -----------
+    filename : str
+        Name of the file to save in results directory
+
+    Returns:
+    --------
+    path : Path
+        Absolute path to the file in results directory
+    """
+    # Get the directory containing this module
+    module_dir = Path(__file__).resolve().parent
+    # Results directory is one level up from src/
+    results_dir = module_dir.parent / "results"
+    # Create results directory if it doesn't exist
+    results_dir.mkdir(parents=True, exist_ok=True)
+    # Return full path to the file
+    return results_dir / filename
 
 
 def load_california_housing() -> Tuple[np.ndarray, np.ndarray]:
@@ -252,8 +277,9 @@ def demo_regression_on_real_data():
                     f'{height:.3f}', ha='center', va='bottom', fontsize=9)
 
     plt.tight_layout()
-    plt.savefig('../results/real_data_regression.png', dpi=300, bbox_inches='tight')
-    print("\nFigure saved to: results/real_data_regression.png")
+    save_path = get_results_path('real_data_regression.png')
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"\nFigure saved to: {save_path}")
     plt.show()
 
 
@@ -317,8 +343,9 @@ def demo_classification_on_real_data():
     ax2.grid(True, alpha=0.3, axis='y')
 
     plt.tight_layout()
-    plt.savefig('../results/real_data_classification.png', dpi=300, bbox_inches='tight')
-    print("Figure saved to: results/real_data_classification.png")
+    save_path = get_results_path('real_data_classification.png')
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"Figure saved to: {save_path}")
     plt.show()
 
 
