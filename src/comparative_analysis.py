@@ -386,17 +386,19 @@ def analyze_learning_rate_sensitivity(
             x_opt, path, cost_history = gradient_descent(
                 f, grad_f, x0, alpha=lr, max_iter=max_iter, tol=1e-10
             )
-            results[lr] = {
-                'x_opt': x_opt,
-                'path': path,
-                'cost_history': cost_history,
-                'converged': True
-            }
-            print(f"  Converged in {len(path)-1} iterations")
-            print(f"  Final cost: {f(x_opt):.8f}")
-        except:
-            print(f"  Diverged!")
-            results[lr] = {'converged': False}
+        except (FloatingPointError, OverflowError, ValueError) as err:
+            print(f"  Diverged! ({err})")
+            results[lr] = {'converged': False, 'error': str(err)}
+            continue
+
+        results[lr] = {
+            'x_opt': x_opt,
+            'path': path,
+            'cost_history': cost_history,
+            'converged': True
+        }
+        print(f"  Converged in {len(path)-1} iterations")
+        print(f"  Final cost: {f(x_opt):.8f}")
 
     # Create visualization
     fig, axes = plt.subplots(2, 2, figsize=figsize)
