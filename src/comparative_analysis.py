@@ -23,6 +23,30 @@ from linear_regression import LinearRegressionGD, generate_linear_data
 from visualizations import plot_comparison_algorithms, plot_cost_history
 
 
+def safe_set_log_scale(ax, y_data_list):
+    """
+    Safely set log scale on y-axis only if all data is strictly positive.
+
+    Parameters:
+    -----------
+    ax : matplotlib axis
+        The axis to potentially set to log scale
+    y_data_list : list of array-like
+        List of all y-data arrays to be plotted on this axis
+    """
+    # Check if all values are strictly positive
+    all_positive = True
+    for data in y_data_list:
+        data_array = np.asarray(data)
+        if len(data_array) == 0 or np.any(data_array <= 0):
+            all_positive = False
+            break
+
+    # Only set log scale if all data is positive
+    if all_positive:
+        ax.set_yscale('log')
+
+
 def compare_optimization_algorithms(
     f, grad_f,
     x0: np.ndarray,
@@ -141,7 +165,7 @@ def compare_optimization_algorithms(
     ax.set_title('Cost Convergence', fontsize=11, fontweight='bold')
     ax.legend(loc='best', fontsize=9)
     ax.grid(True, alpha=0.3)
-    ax.set_yscale('log')
+    safe_set_log_scale(ax, list(costs.values()))
 
     # Plot 5: Iterations comparison
     ax = fig.add_subplot(gs[1, 1])
@@ -297,7 +321,7 @@ def compare_gd_variants_on_linear_regression(
     ax.set_title('Cost Convergence', fontsize=12, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
-    ax.set_yscale('log')
+    safe_set_log_scale(ax, [model.cost_history for model in models.values()])
 
     # Plot 3: R² scores
     ax = fig.add_subplot(gs[1, 1])
@@ -422,7 +446,7 @@ def analyze_learning_rate_sensitivity(
     ax.set_title('Cost Convergence', fontsize=12, fontweight='bold')
     ax.legend(loc='best', fontsize=9)
     ax.grid(True, alpha=0.3)
-    ax.set_yscale('log')
+    safe_set_log_scale(ax, [results[lr]['cost_history'] for lr in learning_rates if results[lr]['converged']])
 
     # Plot 2: Convergence speed
     ax = axes[0, 1]
@@ -457,7 +481,7 @@ def analyze_learning_rate_sensitivity(
     ax.set_ylabel('Final Cost', fontsize=11)
     ax.set_title('Final Cost Values', fontsize=12, fontweight='bold')
     ax.grid(True, alpha=0.3, axis='y')
-    ax.set_yscale('log')
+    safe_set_log_scale(ax, [final_costs])
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
 
     # Plot 4: Summary table
