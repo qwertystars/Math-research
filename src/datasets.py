@@ -49,9 +49,9 @@ def load_california_housing() -> Tuple[np.ndarray, np.ndarray]:
         from sklearn.datasets import fetch_california_housing
         data = fetch_california_housing()
         return data.data, data.target
-    except:
+    except Exception as e:
         # Fallback: generate synthetic housing data
-        print("Generating synthetic housing data...")
+        print(f"Could not load California Housing dataset ({type(e).__name__}). Generating synthetic housing data...")
         np.random.seed(42)
         n_samples = 1000
         n_features = 8
@@ -80,9 +80,9 @@ def load_iris_binary() -> Tuple[np.ndarray, np.ndarray]:
         # Use first two classes only for binary classification
         mask = data.target < 2
         return data.data[mask], data.target[mask]
-    except:
+    except Exception as e:
         # Fallback: generate synthetic flower data
-        print("Generating synthetic classification data...")
+        print(f"Could not load Iris dataset ({type(e).__name__}). Generating synthetic classification data...")
         np.random.seed(42)
         n_samples = 100
         n_features = 4
