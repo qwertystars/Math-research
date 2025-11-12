@@ -39,7 +39,7 @@ Math-research/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/qwertystars/Math-research.git
 cd Math-research
 
 # Install dependencies
