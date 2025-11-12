@@ -426,13 +426,6 @@ This is a research/educational project. Key areas for contribution:
 
 This project is for educational and research purposes.
 
-## 👥 Team Collaboration
-
-This implementation supports a 3-person research team:
-- **Member 1**: Mathematical theory and formulations
-- **Member 2**: Algorithm descriptions and analysis
-- **Member 3**: Implementation and visualization (this repository)
-
 ## 🔗 References
 
 Key concepts implemented:
@@ -444,13 +437,6 @@ Key concepts implemented:
 - Linear Regression
 - Logistic Regression
 
-## 📞 Support
-
-For questions or issues:
-1. Check the Jupyter notebooks for examples
-2. Review the code documentation
-3. Run the test scripts to verify setup
-
 ## 🎯 Learning Objectives
 
 After working with this project, you will understand:
@@ -461,7 +447,3 @@ After working with this project, you will understand:
 5. How to visualize optimization processes
 6. Trade-offs between different algorithms
 7. Practical considerations for real-world applications
-
----
-
-**Happy Learning! 🚀**
