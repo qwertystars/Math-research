@@ -314,7 +314,13 @@ def compare_gd_variants_on_linear_regression(
 
     ax.set_ylabel('R² Score', fontsize=11)
     ax.set_title('Model Performance', fontsize=12, fontweight='bold')
-    ax.set_ylim([0, 1.1])
+
+    # Compute dynamic y-limits to show negative R² values
+    margin = 0.1
+    y_lower = min(r2_scores) - margin
+    y_upper = max(max(r2_scores), 1.0) + margin
+    ax.set_ylim(y_lower, y_upper)
+
     ax.grid(True, alpha=0.3, axis='y')
 
     # Plot 4: Time comparison
